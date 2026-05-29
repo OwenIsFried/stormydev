@@ -166,6 +166,53 @@ toggleButton.Text = ""
 toggleButton.Parent = toggleBack
 
 -------------------------------------------------
+-- FLIGHT SPEED UI
+-------------------------------------------------
+
+local flightSpeedText = Instance.new("TextLabel")
+flightSpeedText.BackgroundTransparency = 1
+flightSpeedText.Position = UDim2.new(0, 25, 0, 70)
+flightSpeedText.Size = UDim2.new(0, 200, 0, 40)
+flightSpeedText.Font = Enum.Font.GothamSemibold
+flightSpeedText.Text = "Flight Speed"
+flightSpeedText.TextSize = 24
+flightSpeedText.TextColor3 = Color3.fromRGB(255,255,255)
+flightSpeedText.TextXAlignment = Enum.TextXAlignment.Left
+flightSpeedText.Parent = content
+
+local flightSpeedBox = Instance.new("TextBox")
+flightSpeedBox.Size = UDim2.new(0, 120, 0, 38)
+flightSpeedBox.Position = UDim2.new(1, -240, 0, 72)
+flightSpeedBox.BackgroundColor3 = Color3.fromRGB(35,35,35)
+flightSpeedBox.TextColor3 = Color3.new(1,1,1)
+flightSpeedBox.PlaceholderText = "80"
+flightSpeedBox.Text = ""
+flightSpeedBox.Font = Enum.Font.Gotham
+flightSpeedBox.TextSize = 20
+flightSpeedBox.ClearTextOnFocus = false
+flightSpeedBox.BorderSizePixel = 0
+flightSpeedBox.Parent = content
+
+local flightSpeedCorner = Instance.new("UICorner")
+flightSpeedCorner.CornerRadius = UDim.new(0,10)
+flightSpeedCorner.Parent = flightSpeedBox
+
+local setFlightSpeedButton = Instance.new("TextButton")
+setFlightSpeedButton.Size = UDim2.new(0, 90, 0, 38)
+setFlightSpeedButton.Position = UDim2.new(1, -110, 0, 72)
+setFlightSpeedButton.BackgroundColor3 = Color3.fromRGB(0,170,127)
+setFlightSpeedButton.Text = "Set"
+setFlightSpeedButton.Font = Enum.Font.GothamBold
+setFlightSpeedButton.TextSize = 20
+setFlightSpeedButton.TextColor3 = Color3.new(1,1,1)
+setFlightSpeedButton.BorderSizePixel = 0
+setFlightSpeedButton.Parent = content
+
+local setFlightCorner = Instance.new("UICorner")
+setFlightCorner.CornerRadius = UDim.new(0,10)
+setFlightCorner.Parent = setFlightSpeedButton
+
+-------------------------------------------------
 -- NOCLIP TOGGLE UI
 -------------------------------------------------
 
@@ -619,7 +666,7 @@ end)
 local RunService = game:GetService("RunService")
 
 local flying = false
-local speed = 80
+local flightspeed = 80
 
 local bv
 local bg
@@ -689,7 +736,7 @@ local function startFly()
 			moveDir = moveDir.Unit
 		end
 
-		bv.Velocity = moveDir * speed
+		bv.Velocity = moveDir * flightspeed
 		bg.CFrame = camera.CFrame
 	end)
 end
@@ -718,6 +765,15 @@ local function stopFly()
 		bg:Destroy()
 	end
 end
+
+setFlightSpeedButton.MouseButton1Click:Connect(function()
+
+	local number = tonumber(flightSpeedBox.Text)
+
+	if number then
+		flightSpeed = number
+	end
+end)
 
 -------------------------------------------------
 -- TOGGLE ANIMATION
@@ -822,7 +878,7 @@ noclipButton.MouseButton1Click:Connect(function()
 end)
 
 -------------------------------------------------
--- WALKSPEED SYSTEM
+-- WALK SYSTEM
 -------------------------------------------------
 
 local defaultSpeed = 16
