@@ -1109,7 +1109,7 @@ local function startFling()
 
 	flingSpin.AngularVelocity = Vector3.new(
 		0,
-		99999,
+		999,
 		0
 	)
 
