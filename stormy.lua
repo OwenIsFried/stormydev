@@ -406,7 +406,8 @@ end)
 
 local minimized = false
 
-local miniSize = UDim2.new(0, 60, 0, 60)
+local normalPosition = frame.Position
+local miniSize = UDim2.new(0, 120, 0, 42)
 
 minimize.MouseButton1Click:Connect(function()
 
@@ -414,35 +415,54 @@ minimize.MouseButton1Click:Connect(function()
 
 	if minimized then
 
+		-- hide content
 		content.Visible = false
 		title.Visible = false
-		minimize.Text = "+"
 
+		-- make frame smaller
 		TweenService:Create(
 			frame,
-			TweenInfo.new(0.25, Enum.EasingStyle.Quad),
+			TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 			{
 				Size = miniSize
 			}
 		):Play()
 
+		-- rounded pill look
 		corner.CornerRadius = UDim.new(1,0)
+
+		-- reposition buttons nicely
+		minimize.Position = UDim2.new(0, 10, 0.5, -15)
+		closeButton.Position = UDim2.new(0, 45, 0.5, -15)
+
+		-- cleaner look
+		minimize.Text = "+"
+		stroke.Color = Color3.fromRGB(55,55,55)
 
 	else
 
-		title.Visible = true
+		-- restore content
 		content.Visible = true
-		minimize.Text = "-"
+		title.Visible = true
 
+		-- restore size
 		TweenService:Create(
 			frame,
-			TweenInfo.new(0.25, Enum.EasingStyle.Quad),
+			TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 			{
 				Size = normalSize
 			}
 		):Play()
 
+		-- restore corners
 		corner.CornerRadius = UDim.new(0,18)
+
+		-- restore button positions
+		minimize.Position = UDim2.new(1,-74,0,6)
+		closeButton.Position = UDim2.new(1,-38,0,6)
+
+		minimize.Text = "-"
+		stroke.Color = Color3.fromRGB(40,40,40)
 
 	end
 end)
