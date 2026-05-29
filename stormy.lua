@@ -394,35 +394,49 @@ espButton.Size = UDim2.new(1,0,1,0)
 espButton.Text = ""
 espButton.Parent = espBack
 
+
 -------------------------------------------------
--- FLING PLAYER UI
+-- FLING UI
 -------------------------------------------------
 
 local flingText = Instance.new("TextLabel")
 flingText.BackgroundTransparency = 1
-flingText.Position = UDim2.new(0, 25, 0, 450)
+flingText.Position = UDim2.new(0, 25, 0, 440)
 flingText.Size = UDim2.new(0, 200, 0, 40)
 flingText.Font = Enum.Font.GothamSemibold
-flingText.Text = "Fling Player"
+flingText.Text = "Fling"
 flingText.TextSize = 24
 flingText.TextColor3 = Color3.fromRGB(255,255,255)
 flingText.TextXAlignment = Enum.TextXAlignment.Left
 flingText.Parent = content
 
-local flingButton = Instance.new("TextButton")
-flingButton.Size = UDim2.new(0, 220, 0, 38)
-flingButton.Position = UDim2.new(1, -240, 0, 452)
-flingButton.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
-flingButton.Text = "Fling Selected Player"
-flingButton.Font = Enum.Font.GothamBold
-flingButton.TextSize = 18
-flingButton.TextColor3 = Color3.new(1,1,1)
-flingButton.BorderSizePixel = 0
-flingButton.Parent = content
+local flingBack = Instance.new("Frame")
+flingBack.Size = UDim2.new(0, 70, 0, 34)
+flingBack.Position = UDim2.new(1, -110, 0, 443)
+flingBack.BackgroundColor3 = Color3.fromRGB(40,40,40)
+flingBack.BorderSizePixel = 0
+flingBack.Parent = content
 
 local flingCorner = Instance.new("UICorner")
-flingCorner.CornerRadius = UDim.new(0,10)
-flingCorner.Parent = flingButton
+flingCorner.CornerRadius = UDim.new(1,0)
+flingCorner.Parent = flingBack
+
+local flingCircle = Instance.new("Frame")
+flingCircle.Size = UDim2.new(0, 26, 0, 26)
+flingCircle.Position = UDim2.new(0, 4, 0.5, -13)
+flingCircle.BackgroundColor3 = Color3.fromRGB(255,255,255)
+flingCircle.BorderSizePixel = 0
+flingCircle.Parent = flingBack
+
+local flingCircleCorner = Instance.new("UICorner")
+flingCircleCorner.CornerRadius = UDim.new(1,0)
+flingCircleCorner.Parent = flingCircle
+
+local flingButton = Instance.new("TextButton")
+flingButton.BackgroundTransparency = 1
+flingButton.Size = UDim2.new(1,0,1,0)
+flingButton.Text = ""
+flingButton.Parent = flingBack
 
 
 
@@ -460,12 +474,6 @@ divider3.BackgroundColor3 = Color3.fromRGB(55,55,55)
 divider3.BorderSizePixel = 0
 divider3.Parent = content
 
-local divider4 = Instance.new("Frame")
-divider4.Size = UDim2.new(1, -50, 0, 2)
-divider4.Position = UDim2.new(0, 25, 0, 440)
-divider4.BackgroundColor3 = Color3.fromRGB(55,55,55)
-divider4.BorderSizePixel = 0
-divider4.Parent = content
 
 
 -------------------------------------------------
@@ -1080,31 +1088,75 @@ espButton.MouseButton1Click:Connect(function()
 end)
 
 -------------------------------------------------
--- FLING PLAYER UI
+-- FLING SYSTEM
 -------------------------------------------------
 
-local flingText = Instance.new("TextLabel")
-flingText.BackgroundTransparency = 1
-flingText.Position = UDim2.new(0, 25, 0, 450)
-flingText.Size = UDim2.new(0, 200, 0, 40)
-flingText.Font = Enum.Font.GothamSemibold
-flingText.Text = "Fling Player"
-flingText.TextSize = 24
-flingText.TextColor3 = Color3.fromRGB(255,255,255)
-flingText.TextXAlignment = Enum.TextXAlignment.Left
-flingText.Parent = content
+local flingEnabled = false
+local flingSpin
 
-local flingButton = Instance.new("TextButton")
-flingButton.Size = UDim2.new(0, 220, 0, 38)
-flingButton.Position = UDim2.new(1, -240, 0, 452)
-flingButton.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
-flingButton.Text = "Fling Selected Player"
-flingButton.Font = Enum.Font.GothamBold
-flingButton.TextSize = 18
-flingButton.TextColor3 = Color3.new(1,1,1)
-flingButton.BorderSizePixel = 0
-flingButton.Parent = content
+local function startFling()
 
-local flingCorner = Instance.new("UICorner")
-flingCorner.CornerRadius = UDim.new(0,10)
-flingCorner.Parent = flingButton
+	local character = player.Character
+	if not character then return end
+
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+
+	flingSpin = Instance.new("BodyAngularVelocity")
+	flingSpin.Name = "StormyFling"
+
+	flingSpin.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+
+	flingSpin.AngularVelocity = Vector3.new(
+		0,
+		99999,
+		0
+	)
+
+	flingSpin.P = 125000
+	flingSpin.Parent = hrp
+end
+
+local function stopFling()
+
+	local character = player.Character
+	if not character then return end
+
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+
+	local spin = hrp:FindFirstChild("StormyFling")
+
+	if spin then
+		spin:Destroy()
+	end
+end
+
+-------------------------------------------------
+-- FLING TOGGLE
+-------------------------------------------------
+
+local function setFling(state)
+
+	flingEnabled = state
+
+	if state then
+
+		flingBack.BackgroundColor3 = Color3.fromRGB(0,170,127)
+		flingCircle.Position = UDim2.new(1, -30, 0.5, -13)
+
+		startFling()
+
+	else
+
+		flingBack.BackgroundColor3 = Color3.fromRGB(40,40,40)
+		flingCircle.Position = UDim2.new(0, 4, 0.5, -13)
+
+		stopFling()
+
+	end
+end
+
+flingButton.MouseButton1Click:Connect(function()
+	setFling(not flingEnabled)
+end)
