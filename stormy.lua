@@ -1095,6 +1095,7 @@ local flingEnabled = false
 local flingSpin
 
 local flingConnection
+local flingVelocity
 
 local function startFling()
 
@@ -1108,24 +1109,36 @@ local function startFling()
 		return
 	end
 
-	-- make yourself stable
-	humanoid.PlatformStand = false
 	humanoid.AutoRotate = false
 
-	-- prevent ragdoll feeling
-	hrp.AssemblyAngularVelocity = Vector3.zero
+	-- huge invisible spin force
+	flingVelocity = Instance.new("BodyAngularVelocity")
+	flingVelocity.Name = "StormyFling"
 
+	flingVelocity.MaxTorque = Vector3.new(
+		math.huge,
+		math.huge,
+		math.huge
+	)
+
+	flingVelocity.AngularVelocity = Vector3.new(
+		0,
+		500,
+		0
+	)
+
+	flingVelocity.P = 999999
+	flingVelocity.Parent = hrp
+
+	-- keeps YOU more stable
 	flingConnection = RunService.Heartbeat:Connect(function()
 
-		-- constantly reset YOUR velocity
-		hrp.AssemblyLinearVelocity = Vector3.zero
+		if hrp then
 
-		-- spin very fast
-		hrp.CFrame *= CFrame.Angles(
-			0,
-			math.rad(250),
-			0
-		)
+			-- small stabilization only
+			hrp.AssemblyLinearVelocity *= Vector3.new(0.2,1,0.2)
+
+		end
 	end)
 end
 
@@ -1137,12 +1150,25 @@ local function stopFling()
 	end
 
 	local character = player.Character
-	if not character then return end
 
-	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if character then
 
-	if humanoid then
-		humanoid.AutoRotate = true
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.AutoRotate = true
+		end
+
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+
+		if hrp then
+
+			local fling = hrp:FindFirstChild("StormyFling")
+
+			if fling then
+				fling:Destroy()
+			end
+		end
 	end
 end
 
