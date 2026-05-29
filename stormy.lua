@@ -106,10 +106,20 @@ closeCorner.Parent = closeButton
 -- CONTENT
 -------------------------------------------------
 
-local content = Instance.new("Frame")
+local content = Instance.new("ScrollingFrame")
 content.BackgroundTransparency = 1
 content.Position = UDim2.new(0,0,0,42)
 content.Size = UDim2.new(1,0,1,-42)
+
+-- scrolling
+content.CanvasSize = UDim2.new(0,0,0,1000)
+
+content.ScrollBarThickness = 6
+content.ScrollBarImageColor3 = Color3.fromRGB(80,80,80)
+
+content.BorderSizePixel = 0
+content.ScrollingDirection = Enum.ScrollingDirection.Y
+
 content.Parent = frame
 
 -------------------------------------------------
@@ -246,7 +256,7 @@ setCorner.CornerRadius = UDim.new(0,10)
 setCorner.Parent = setSpeedButton
 
 local resetSpeedButton = Instance.new("TextButton")
-resetSpeedButton.Size = UDim2.new(0, 210, 0, 38)
+resetSpeedButton.Size = UDim2.new(0, 220, 0, 38)
 resetSpeedButton.Position = UDim2.new(1, -240, 0, 200)
 resetSpeedButton.BackgroundColor3 = Color3.fromRGB(50,50,50)
 resetSpeedButton.Text = "Reset To Default"
@@ -266,7 +276,7 @@ resetCorner.Parent = resetSpeedButton
 
 local tpText = Instance.new("TextLabel")
 tpText.BackgroundTransparency = 1
-tpText.Position = UDim2.new(0, 25, 0, 270)
+tpText.Position = UDim2.new(0, 25, 0, 260)
 tpText.Size = UDim2.new(0, 200, 0, 40)
 tpText.Font = Enum.Font.GothamSemibold
 tpText.Text = "Teleport To Player"
@@ -283,8 +293,8 @@ local selectedPlayer = nil
 local dropdownOpen = false
 
 local dropdown = Instance.new("Frame")
-dropdown.Size = UDim2.new(0, 210, 0, 38)
-dropdown.Position = UDim2.new(1, -240, 0, 272)
+dropdown.Size = UDim2.new(0, 220, 0, 38)
+dropdown.Position = UDim2.new(1, -240, 0, 262)
 dropdown.BackgroundColor3 = Color3.fromRGB(35,35,35)
 dropdown.BorderSizePixel = 0
 dropdown.ClipsDescendants = false
@@ -307,7 +317,7 @@ dropdownButton.Parent = dropdown
 dropdownButton.ZIndex = 6
 
 local playerList = Instance.new("ScrollingFrame")
-playerList.Position = UDim2.new(0,0,0,38)
+playerList.Position = UDim2.new(0,0,0,28)
 playerList.Size = UDim2.new(1,0,0,120)
 playerList.CanvasSize = UDim2.new(0,0,0,0)
 playerList.ScrollBarThickness = 4
@@ -328,7 +338,7 @@ layout.Padding = UDim.new(0,4)
 
 local tpButton = Instance.new("TextButton")
 tpButton.Size = UDim2.new(0, 90, 0, 38)
-tpButton.Position = UDim2.new(1, -110, 0, 320)
+tpButton.Position = UDim2.new(1, -110, 0, 310)
 tpButton.BackgroundColor3 = Color3.fromRGB(0,170,127)
 tpButton.Text = "Teleport"
 tpButton.Font = Enum.Font.GothamBold
@@ -341,6 +351,48 @@ local tpCorner = Instance.new("UICorner")
 tpCorner.CornerRadius = UDim.new(0,10)
 tpCorner.Parent = tpButton
 
+-------------------------------------------------
+-- PLAYER ESP UI
+-------------------------------------------------
+
+local espText = Instance.new("TextLabel")
+espText.BackgroundTransparency = 1
+espText.Position = UDim2.new(0, 25, 0, 380)
+espText.Size = UDim2.new(0, 200, 0, 40)
+espText.Font = Enum.Font.GothamSemibold
+espText.Text = "Player ESP"
+espText.TextSize = 24
+espText.TextColor3 = Color3.fromRGB(255,255,255)
+espText.TextXAlignment = Enum.TextXAlignment.Left
+espText.Parent = content
+
+local espBack = Instance.new("Frame")
+espBack.Size = UDim2.new(0, 70, 0, 34)
+espBack.Position = UDim2.new(1, -110, 0, 383)
+espBack.BackgroundColor3 = Color3.fromRGB(40,40,40)
+espBack.BorderSizePixel = 0
+espBack.Parent = content
+
+local espCorner = Instance.new("UICorner")
+espCorner.CornerRadius = UDim.new(1,0)
+espCorner.Parent = espBack
+
+local espCircle = Instance.new("Frame")
+espCircle.Size = UDim2.new(0, 26, 0, 26)
+espCircle.Position = UDim2.new(0, 4, 0.5, -13)
+espCircle.BackgroundColor3 = Color3.fromRGB(255,255,255)
+espCircle.BorderSizePixel = 0
+espCircle.Parent = espBack
+
+local espCircleCorner = Instance.new("UICorner")
+espCircleCorner.CornerRadius = UDim.new(1,0)
+espCircleCorner.Parent = espCircle
+
+local espButton = Instance.new("TextButton")
+espButton.BackgroundTransparency = 1
+espButton.Size = UDim2.new(1,0,1,0)
+espButton.Text = ""
+espButton.Parent = espBack
 
 
 
@@ -352,6 +404,31 @@ tpCorner.Parent = tpButton
 
 
 
+
+-------------------------------------------------
+-- DIVIDERS
+-------------------------------------------------
+
+local divider1 = Instance.new("Frame")
+divider1.Size = UDim2.new(1, -50, 0, 2)
+divider1.Position = UDim2.new(0, 25, 0, 250)
+divider1.BackgroundColor3 = Color3.fromRGB(55,55,55)
+divider1.BorderSizePixel = 0
+divider1.Parent = content
+
+local divider2 = Instance.new("Frame")
+divider2.Size = UDim2.new(1, -50, 0, 2)
+divider2.Position = UDim2.new(0, 25, 0, 80)
+divider2.BackgroundColor3 = Color3.fromRGB(55,55,55)
+divider2.BorderSizePixel = 0
+divider2.Parent = content
+
+local divider3 = Instance.new("Frame")
+divider3.Size = UDim2.new(1, -50, 0, 2)
+divider3.Position = UDim2.new(0, 25, 0, 140)
+divider3.BackgroundColor3 = Color3.fromRGB(55,55,55)
+divider3.BorderSizePixel = 0
+divider3.Parent = content
 
 
 -------------------------------------------------
@@ -406,8 +483,13 @@ end)
 
 local minimized = false
 
-local normalPosition = frame.Position
-local miniSize = UDim2.new(0, 120, 0, 42)
+local savedPosition = frame.Position
+local savedAnchor = frame.AnchorPoint
+
+local miniSize = UDim2.new(0, 88, 0, 42)
+
+-- top-left position under Roblox button
+local minimizedPosition = UDim2.new(0, 10, 0, 70)
 
 minimize.MouseButton1Click:Connect(function()
 
@@ -415,49 +497,59 @@ minimize.MouseButton1Click:Connect(function()
 
 	if minimized then
 
+		-- save old position before minimizing
+		savedPosition = frame.Position
+
+		-- switch anchor for top-left positioning
+		frame.AnchorPoint = Vector2.new(0,0)
+
 		-- hide content
 		content.Visible = false
 		title.Visible = false
 
-		-- make frame smaller
+		-- animate size + position
 		TweenService:Create(
 			frame,
 			TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 			{
-				Size = miniSize
+				Size = miniSize,
+				Position = minimizedPosition
 			}
 		):Play()
 
 		-- rounded pill look
 		corner.CornerRadius = UDim.new(1,0)
 
-		-- reposition buttons nicely
+		-- reposition buttons
 		minimize.Position = UDim2.new(0, 10, 0.5, -15)
 		closeButton.Position = UDim2.new(0, 45, 0.5, -15)
 
-		-- cleaner look
 		minimize.Text = "+"
 		stroke.Color = Color3.fromRGB(55,55,55)
 
 	else
 
+		-- restore anchor
+		frame.AnchorPoint = savedAnchor
+
 		-- restore content
 		content.Visible = true
 		title.Visible = true
 
-		-- restore size
+		-- animate back
 		TweenService:Create(
 			frame,
 			TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 			{
-				Size = normalSize
+				Size = normalSize,
+				Position = savedPosition
 			}
 		):Play()
 
 		-- restore corners
 		corner.CornerRadius = UDim.new(0,18)
 
-		-- restore button positions
+		-- restore buttons
 		minimize.Position = UDim2.new(1,-74,0,6)
 		closeButton.Position = UDim2.new(1,-38,0,6)
 
@@ -844,4 +936,108 @@ tpButton.MouseButton1Click:Connect(function()
 	if hrp and targetHRP then
 		hrp.CFrame = targetHRP.CFrame + Vector3.new(0,3,0)
 	end
+end)
+
+
+-------------------------------------------------
+-- PLAYER ESP SYSTEM
+-------------------------------------------------
+
+local espEnabled = false
+local espObjects = {}
+
+local function createESP(plr)
+
+	if plr == player then
+		return
+	end
+
+	local function addHighlight(character)
+
+		if not character then
+			return
+		end
+
+		-- remove old
+		if espObjects[plr] then
+			espObjects[plr]:Destroy()
+		end
+
+		local highlight = Instance.new("Highlight")
+		highlight.Name = "StormyESP"
+		highlight.FillColor = Color3.fromRGB(0,170,255)
+		highlight.OutlineColor = Color3.fromRGB(255,255,255)
+		highlight.FillTransparency = 0.5
+		highlight.OutlineTransparency = 0
+		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+		highlight.Parent = character
+
+		espObjects[plr] = highlight
+	end
+
+	if plr.Character then
+		addHighlight(plr.Character)
+	end
+
+	plr.CharacterAdded:Connect(function(character)
+
+		if espEnabled then
+			task.wait(1)
+			addHighlight(character)
+		end
+	end)
+end
+
+local function enableESP()
+
+	for _, plr in pairs(Players:GetPlayers()) do
+		createESP(plr)
+	end
+end
+
+local function disableESP()
+
+	for _, esp in pairs(espObjects) do
+		if esp then
+			esp:Destroy()
+		end
+	end
+
+	table.clear(espObjects)
+end
+
+Players.PlayerAdded:Connect(function(plr)
+
+	if espEnabled then
+		createESP(plr)
+	end
+end)
+
+-------------------------------------------------
+-- ESP TOGGLE
+-------------------------------------------------
+
+local function setESP(state)
+
+	espEnabled = state
+
+	if state then
+
+		espBack.BackgroundColor3 = Color3.fromRGB(0,170,127)
+		espCircle.Position = UDim2.new(1, -30, 0.5, -13)
+
+		enableESP()
+
+	else
+
+		espBack.BackgroundColor3 = Color3.fromRGB(40,40,40)
+		espCircle.Position = UDim2.new(0, 4, 0.5, -13)
+
+		disableESP()
+
+	end
+end
+
+espButton.MouseButton1Click:Connect(function()
+	setESP(not espEnabled)
 end)
