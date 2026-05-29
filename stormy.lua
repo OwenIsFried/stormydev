@@ -394,6 +394,36 @@ espButton.Size = UDim2.new(1,0,1,0)
 espButton.Text = ""
 espButton.Parent = espBack
 
+-------------------------------------------------
+-- FLING PLAYER UI
+-------------------------------------------------
+
+local flingText = Instance.new("TextLabel")
+flingText.BackgroundTransparency = 1
+flingText.Position = UDim2.new(0, 25, 0, 450)
+flingText.Size = UDim2.new(0, 200, 0, 40)
+flingText.Font = Enum.Font.GothamSemibold
+flingText.Text = "Fling Player"
+flingText.TextSize = 24
+flingText.TextColor3 = Color3.fromRGB(255,255,255)
+flingText.TextXAlignment = Enum.TextXAlignment.Left
+flingText.Parent = content
+
+local flingButton = Instance.new("TextButton")
+flingButton.Size = UDim2.new(0, 220, 0, 38)
+flingButton.Position = UDim2.new(1, -240, 0, 452)
+flingButton.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
+flingButton.Text = "Fling Selected Player"
+flingButton.Font = Enum.Font.GothamBold
+flingButton.TextSize = 18
+flingButton.TextColor3 = Color3.new(1,1,1)
+flingButton.BorderSizePixel = 0
+flingButton.Parent = content
+
+local flingCorner = Instance.new("UICorner")
+flingCorner.CornerRadius = UDim.new(0,10)
+flingCorner.Parent = flingButton
+
 
 
 
@@ -429,6 +459,13 @@ divider3.Position = UDim2.new(0, 25, 0, 140)
 divider3.BackgroundColor3 = Color3.fromRGB(55,55,55)
 divider3.BorderSizePixel = 0
 divider3.Parent = content
+
+local divider4 = Instance.new("Frame")
+divider4.Size = UDim2.new(1, -50, 0, 2)
+divider4.Position = UDim2.new(0, 25, 0, 440)
+divider4.BackgroundColor3 = Color3.fromRGB(55,55,55)
+divider4.BorderSizePixel = 0
+divider4.Parent = content
 
 
 -------------------------------------------------
@@ -1041,3 +1078,33 @@ end
 espButton.MouseButton1Click:Connect(function()
 	setESP(not espEnabled)
 end)
+
+-------------------------------------------------
+-- FLING PLAYER UI
+-------------------------------------------------
+
+local flingText = Instance.new("TextLabel")
+flingText.BackgroundTransparency = 1
+flingText.Position = UDim2.new(0, 25, 0, 450)
+flingText.Size = UDim2.new(0, 200, 0, 40)
+flingText.Font = Enum.Font.GothamSemibold
+flingText.Text = "Fling Player"
+flingText.TextSize = 24
+flingText.TextColor3 = Color3.fromRGB(255,255,255)
+flingText.TextXAlignment = Enum.TextXAlignment.Left
+flingText.Parent = content
+
+local flingButton = Instance.new("TextButton")
+flingButton.Size = UDim2.new(0, 220, 0, 38)
+flingButton.Position = UDim2.new(1, -240, 0, 452)
+flingButton.BackgroundColor3 = Color3.fromRGB(170, 85, 0)
+flingButton.Text = "Fling Selected Player"
+flingButton.Font = Enum.Font.GothamBold
+flingButton.TextSize = 18
+flingButton.TextColor3 = Color3.new(1,1,1)
+flingButton.BorderSizePixel = 0
+flingButton.Parent = content
+
+local flingCorner = Instance.new("UICorner")
+flingCorner.CornerRadius = UDim.new(0,10)
+flingCorner.Parent = flingButton
